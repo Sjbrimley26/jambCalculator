@@ -1,13 +1,12 @@
 import { store } from 'react-easy-state';
 
-const doorStore = {
+const doorStore = store({
   name: "Spencer",
   currentTime: new Date(),
 
   updateTime() {
-    this.currentTime = new Date();
-    console.log("Update Time!", this.currentTime);
+    doorStore.currentTime = new Date();
   }
-};
+});
 
-export default store(doorStore);
+export default doorStore;

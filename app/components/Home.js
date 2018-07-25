@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router';
 import { view } from 'react-easy-state';
+import doorStore from "../store/doorStore";
 
 class Home extends Component {
   constructor(props) {
@@ -11,15 +12,18 @@ class Home extends Component {
     return this.props.history.push(url);
   }
 
-  componentDidMount() {
-    setInterval(this.props.store.updateTime, 1000);
+  componentDidMount(){
+    setInterval(doorStore.updateTime, 1000);
   }
 
   render() {
+    const { currentTime } = doorStore;
+    
     return (
       <div>
         Home!
-        { this.props.store.currentTime.toString() }
+        <br/>
+        { currentTime.toLocaleString() }
       </div>
     );
   }
