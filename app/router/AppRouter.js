@@ -9,7 +9,7 @@ const AppRouter = () => {
     <HashRouter>
       <div className="fullscreen">
         <Switch>
-          <Route path="/" exact render={props => <Home {...props} />} />
+          <Route path="/" exact render={ props => <Home {...props} /> } />
         </Switch>
       </div>
     </HashRouter>
