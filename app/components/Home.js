@@ -12,18 +12,16 @@ class Home extends Component {
     return this.props.history.push(url);
   }
 
-  componentDidMount(){
-    setInterval(doorStore.updateTime, 1000);
-  }
-
   render() {
-    const { currentTime } = doorStore;
+    let { currentTime } = doorStore;
     
     return (
       <div>
         Home!
         <br/>
-        { currentTime.toLocaleString() }
+        { currentTime.toLocaleDateString() }
+        <br/>
+        { currentTime.toLocaleTimeString() }
       </div>
     );
   }
