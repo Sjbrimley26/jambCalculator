@@ -41,9 +41,10 @@ module.exports = {
       },
     ]
   },
+  watch: true,
   plugins: [
     new HtmlWebpackPlugin({
-      template: "!!prerender-loader?string!./src/index.html",
+      template: "./src/index.html",
       favicon: "./assets/images/favicon.ico"
     }),
     new ManifestPlugin({

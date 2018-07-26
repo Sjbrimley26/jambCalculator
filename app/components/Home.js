@@ -1,27 +1,23 @@
 import React, { Component } from "react";
 import { withRouter } from 'react-router';
 import { view } from 'react-easy-state';
-import doorStore from "../store/doorStore";
+import { Link } from "react-router-dom"
+import Header from "./Header";
 
 class Home extends Component {
   constructor(props) {
     super(props);
   }
 
-  navTo = (url) => {
-    return this.props.history.push(url);
-  }
-
   render() {
-    let { currentTime } = doorStore;
+    let { time } = this.props;
     
     return (
-      <div>
-        Home!
-        <br/>
-        { currentTime.toLocaleDateString() }
-        <br/>
-        { currentTime.toLocaleTimeString() }
+      <div className="mainWindow">
+        <Header title="Home" />
+        <div className="mainContent">
+          <Link to="/location" className="navLink" > Build Calculator </Link>
+        </div>
       </div>
     );
   }

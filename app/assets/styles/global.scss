@@ -6,6 +6,8 @@ body, html {
   height: 100vh;
   width: 100vw;
   margin: 0;
+  min-width: 320px;
+  min-height: 427px;
 }
 
 *, *:before, *:after {
@@ -19,4 +21,69 @@ body, html {
 
 #app {
   margin: 0;
+}
+
+.mainWindow {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  background: rgba(217, 239, 245, 0.8);
+  font-size: 1.15em;
+
+
+  @media (min-height: 600px) {
+    max-height: 600px;
+    top: 10vh;
+    height: 80vh;
+  }
+
+  @media (min-width: 500px) {
+    width: 80vw;
+    max-width: 800px;
+    left: 10vw;
+  }
+
+  @media (min-width: 1000px) {
+    left: calc(50% - 400px);
+  }
+}
+
+.header {
+  height: 40px;
+  background: rgb(182, 219, 245);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .title {
+    font-size: 1.3em;
+    display: inline-block;
+  }
+}
+
+.mainContent {
+  height: 100%;
+  width: 100%;
+  background: inherit;
+  padding: 10px 20px;
+
+  .description {
+    display: block;
+    max-width: 90%;
+    margin: auto;
+    text-align: center;
+  }
+}
+
+.navLink {
+  color: black;
+  display: inline-block;
+
+  &:visited {
+    color: black;
+  }
+
+  &:hover {
+    background: rgb(195, 224, 245);
+  }
 }
