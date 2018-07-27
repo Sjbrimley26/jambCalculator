@@ -27,7 +27,7 @@ body, html {
   position: absolute;
   height: 100%;
   width: 100%;
-  background: rgba(217, 239, 245, 0.8);
+  background: rgb(217, 239, 245);
   font-size: 1.15em;
 
 
@@ -59,6 +59,13 @@ body, html {
     font-size: 1.3em;
     display: inline-block;
   }
+
+  .backButton {
+    position: absolute;
+    left: 10px;
+    height: 30px;
+    width: 30px;
+  }
 }
 
 .mainContent {
@@ -73,6 +80,17 @@ body, html {
     margin: auto;
     text-align: center;
   }
+
+  &::after {
+    position: absolute;
+    content: ' ';
+    top: calc(100% + 30px);
+    left: 10%;
+    height: 0;
+    width: 80%;
+    box-shadow: 0 2px 20px 20px darkgray;
+    z-index: -1;
+  }
 }
 
 .navLink {
@@ -86,4 +104,12 @@ body, html {
   &:hover {
     background: rgb(195, 224, 245);
   }
+}
+
+.footer {
+  position: absolute;
+  height: 20px;
+  width: 150px;
+  left: calc(100% - 150px);
+  top: calc(100% - 20px);
 }
