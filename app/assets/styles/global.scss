@@ -17,6 +17,8 @@ body, html {
 .fullscreen {
   height: 100vh;
   width: 100vw;
+  z-index: -1;
+  background: rgb(200, 200, 200);
 }
 
 #app {
@@ -29,6 +31,8 @@ body, html {
   width: 100%;
   background: rgb(217, 239, 245);
   font-size: 1.15em;
+  z-index: 2;
+  border-radius: 8px;
 
 
   @media (min-height: 600px) {
@@ -54,6 +58,7 @@ body, html {
   display: flex;
   justify-content: center;
   align-items: center;
+  border-radius: 8px 8px 0 0;
 
   .title {
     font-size: 1.3em;
@@ -73,6 +78,7 @@ body, html {
   width: 100%;
   background: inherit;
   padding: 10px 20px;
+  border-radius: 8px;
 
   .description {
     display: block;

@@ -2,7 +2,9 @@ import { store } from 'react-easy-state';
 
 const doorStore = store({
   goBack: false,
-  currentDoor: {},
+  currentDoor: localStorage.getItem("storedDoor") ?
+    JSON.parse(localStorage.getItem("storedDoor")) :
+    {},
   currentOrder: [],
 
   setDoorProperty(property) {

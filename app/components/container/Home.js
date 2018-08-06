@@ -16,7 +16,6 @@ class Home extends Component {
   }
 
   render() {
-    let { time } = this.props;
     
     return (
       <div className="mainWindow">
