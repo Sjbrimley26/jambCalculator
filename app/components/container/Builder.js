@@ -28,34 +28,28 @@ class Builder extends Component {
     };
   }
 
-  componentDidMount() {
-    doorStore.goBack = false;
-    // console.log(doorStore.currentDoor);
-    // console.log(this.props.history);
-  }
-
-  componentWillUnmount() {
-    if (doorStore.goBack) {
-      doorStore.resetDoorProperty(this.state.currentProp);
-    }
-  }
-
   navTo = (url) => {
     return this.props.history.push(url);
   }
 
-  selectOption() {
+  selectOption() { // I should clean up this function
     if ( this.state.selected_value ) {
 
       let { propStates } = doorStore;
       doorStore.setDoorProperty(this.state.currentProp)(this.state.selected_value);
 
-      if ( this.currentProp === "sidelites" || ( doorStore.currentDoor.location === "Interior" && this.currentProp === "swing") ) {
-        
-        // go to confirmation page
-
+      // Upon selecting the last option...
+      if ( 
+        this.state.currentProp === "sidelites" ||
+        (doorStore.currentDoor.location === "Interior" && this.state.currentProp === "height") 
+      ) {
+        // Redirect to door confirmation
+        // But I should redirect to an additional details page
+        // Or I could just add more build options and be more careful about the indices and stuff
+        this.props.history.push("confirmDoor")
       } else {
 
+        // skip a few indices so we don't gather irrelevant details
         if ( doorStore.currentDoor.build === "Bore and Dap" && this.state.currentProp === "location" ) {
           doorStore.incrementPropIndex();
           doorStore.incrementPropIndex();

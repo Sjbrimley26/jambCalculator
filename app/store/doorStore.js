@@ -1,11 +1,49 @@
 import { store } from 'react-easy-state';
 
 const doorStore = store({
-  goBack: false,
   currentDoor: localStorage.getItem("storedDoor") ?
     JSON.parse(localStorage.getItem("storedDoor")) :
-    {},
+    {
+      complete: false
+    },
   currentOrder: [],
+
+  checkIfDoorComplete() {
+    const { location, build } = doorStore;
+
+    const globalRequiredProps = [
+      "build",
+      "location",
+      "height",
+      "handing"
+    ];
+
+    let requiredProps;
+
+    switch(true) {
+      case location === "Interior" && build === "Pre-Hung Single":
+        requiredProps = [
+          ...globalRequiredProps,
+          
+        ]
+        break;
+      
+      case location === "Interior" && build === "Pre-Hung Double":
+        break;
+      
+      case location === "Exterior" && build === "Pre-Hung Single":
+        break;
+
+      case location === "Exterior" && build === "Pre-Hung Double":
+        break;
+      
+      case build === "Bore and Dap":
+        break;
+      
+      default:
+        return false;
+    }
+  },
 
   setDoorProperty(property) {
     return function(value) {
@@ -20,7 +58,9 @@ const doorStore = store({
   resetCurrentDoor() {
     let tempDoor = {...doorStore.currentDoor};
     doorStore.propIndex = 0;
-    doorStore.currentDoor = {};
+    doorStore.currentDoor = {
+      complete: false
+    };
     return tempDoor;
   },
 

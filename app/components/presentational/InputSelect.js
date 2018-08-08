@@ -11,6 +11,7 @@ const Inputs = ({
   let inputs;
 
   const createRadioInput = id => {
+    // Todo: Add tooltips
     return (
       <div key={Math.random()}>
         <input 
@@ -91,6 +92,54 @@ const Inputs = ({
         "2"
       ]);
       break;
+    
+    case "hinge_size":
+      inputs = createArrayOfRadioInputs([
+        "3-1/2\"",
+        "4\"",
+        "4-1/2\""
+      ]);
+      break;
+    
+    case "hinge_radius":
+      inputs = createArrayOfRadioInputs([
+        "1/4\"",
+        "5/8\""
+      ]);
+      break;
+
+    case "pair_type":
+      inputs = createArrayOfRadioInputs([
+        "French Pair",
+        "Ball-Catch Pair",
+        "Bi-Pass Pair"
+      ]);
+      break;
+
+    case "is_fire_rated":
+      inputs = createArrayOfRadioInputs([ "Yes", "No" ]);
+      break;
+
+    case "handing":
+      inputs = createArrayOfRadioInputs([ "Left", "Right" ]);
+
+    case "hinge_finish":
+      inputs = createArrayOfRadioInputs([
+        "Satin Nickel (US15)",
+        "Oil Rubbed Bronze (US10B)",
+        "Matte Black (US19)"
+      ]);
+      break;
+
+    case "threshold_finish":
+      inputs = createArrayOfRadioInputs([
+        "Mill",
+        "Dark Bronze"
+      ]);
+      break;
+
+    // TODO : Add cases for hinge_locations and bore_locations
+    // They will need text inputs
   }
 
   return (
