@@ -6,10 +6,12 @@ const doorStore = store({
     JSON.parse(localStorage.getItem("storedDoor")) :
     {},
   currentOrder: [],
+  currentProps: [],
 
   setDoorProperty(property) {
     return function(value) {
       doorStore.currentDoor[property] = value;
+      doorStore.currentProps.push(property);
     };
   },
 

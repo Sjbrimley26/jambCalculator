@@ -3,16 +3,32 @@ import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 import Header from "../presentational/Header";
 import Description from "../presentational/Description";
+import InputSelect from "../presentational/InputSelect";
 import doorStore from "../../store/doorStore";
-import _ from "lodash"
+import { titleCase } from "../../misc/utils";
+
+const propStates = [ // Needs to be ordered
+  "build",
+  "location",
+  "material",
+  "jamb_width",
+  "height",
+  "swing",
+  "sidelites"
+];
+
+let propStateIndex = 0;
 
 class Builder extends Component {
   constructor(props){
     super(props);
 
+    this.selectOption = this.selectOption.bind(this);
+    this.selectValue = this.selectValue.bind(this);
+
     this.state = {
-      description: "",
-      selected_value: undefined
+      selected_value: undefined,
+      currentProp: propStates[propStateIndex]
     };
   }
 
@@ -24,7 +40,7 @@ class Builder extends Component {
 
   componentWillUnmount() {
     if (doorStore.goBack) {
-      doorStore.resetDoorProperty(this.props.question);
+      doorStore.resetDoorProperty(this.state.currentProp);
     }
   }
 
@@ -33,24 +49,32 @@ class Builder extends Component {
   }
 
   selectOption() {
-    doorStore.setDoorProperty(this.props.question)(this.state.selected_value);
+    doorStore.setDoorProperty(this.state.currentProp)(this.state.selected_value);
+    propStateIndex++;
+    this.setState({
+      currentProp: propStates[propStateIndex]
+    });
   }
 
-  verifyProps() {
-    switch(this.props.question) {
-      case "build":
-        break;
-      case "location":
-        if ( !doorStore.currentDoor.hasOwnProperty("build"))
-    }
+  selectValue( event ) {
+    this.setState({
+      selected_value: event.target.value
+    });
   }
 
   render() {
+
     return (
       <div className="mainWindow">
-        <Header title={_.startCase(_.toLower(this.props.question))}/>
+        <Header title={ titleCase(this.state.currentProp) }/>
         <div className="mainContent">
-          < Description option={this.props.question} /> 
+          < Description option={this.state.currentProp} />
+          < InputSelect 
+            selectOption={this.selectOption} 
+            selectValue={this.selectValue}
+            option={this.state.currentProp}
+            selected_value={this.state.selected_value}
+          />
         </div>
       </div>
     );

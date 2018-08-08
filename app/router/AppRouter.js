@@ -27,7 +27,7 @@ class AppRouter extends Component {
         <div className="fullscreen">
           <Switch>
             <Route path="/" exact render={ props => <Home {...props} /> } />
-            <Route path="/build" exact render={ props => <Builder {...props} question="build" /> } />
+            <Route path="/build" exact render={ props => <Builder {...props} /> } />
           </Switch>
           <div className="footer">
             <a href="https://icons8.com">Icon pack by Icons8</a>
