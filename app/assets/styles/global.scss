@@ -91,6 +91,22 @@ body, html {
     margin-top: 20%;
   }
 
+  .forwardArrow {
+    position: absolute;
+    top: 95%;
+    left: calc(95% - 40px);
+    height: 40px;
+    width: 40px;
+  }
+
+  .resetButton {
+    position: absolute;
+    top: calc(95% + 5px);
+    left: 5%;
+    height: 30px;
+    width: 30px;
+  }
+
   &::after {
     position: absolute;
     content: ' ';

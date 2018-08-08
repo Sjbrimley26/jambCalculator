@@ -1,9 +1,10 @@
 import React, { Component } from "react";
-import { titleCase } from "../../misc/utils";
+import { view } from "react-easy-state";
+// import { titleCase } from "../../misc/utils";
 
 const Inputs = ({
   option, 
-  selectValue,
+  handleInputChange,
   selected_value
 }) => {
 
@@ -17,11 +18,11 @@ const Inputs = ({
           name="build"
           value={id}
           id={id}
-          onChange={selectValue}
+          onChange={handleInputChange}
           checked={selected_value === id}
         ></input>
         <label htmlFor={id}>
-          { titleCase(id) }
+          { id }
         </label>
       </div>
     );
@@ -34,8 +35,8 @@ const Inputs = ({
   switch(option) {
     case "build":
       inputs = createArrayOfRadioInputs([
-        "Pre Hung Single",
-        "Pre Hung Double",
+        "Pre-Hung Single",
+        "Pre-Hung Double",
         "Bore and Dap"
       ]);
       break;
@@ -60,19 +61,19 @@ const Inputs = ({
     case "jamb_width":
       // Need to add textarea for custom sizes
       inputs = createArrayOfRadioInputs([
-        "4 5/8\"",
-        "5 3/8\"",
-        "6 5/8\"",
-        "7 1/2\""
+        "4-5/8\"",
+        "5-3/8\"",
+        "6-5/8\"",
+        "7-1/2\""
       ]);
       break;
     
     case "height":
       // Need to add textarea for custom sizes
       inputs = createArrayOfRadioInputs([
-        "68",
-        "70",
-        "80"
+        "6\'8\"",
+        "7\'0\"",
+        "8\'0\""
       ]);
       break;
     
@@ -85,9 +86,9 @@ const Inputs = ({
     
     case "sidelites":
       inputs = createArrayOfRadioInputs([
-        0,
-        1,
-        2
+        "0",
+        "1",
+        "2"
       ]);
       break;
   }
@@ -111,7 +112,7 @@ class InputSelect extends Component {
       <div className="inputSelect" >
         < Inputs
           option={this.props.option}
-          selectValue={this.props.selectValue}
+          handleInputChange={this.props.handleInputChange}
           selected_value={this.props.selected_value}
         />
       </div>
@@ -119,4 +120,4 @@ class InputSelect extends Component {
   }
 }
 
-export default InputSelect;
+export default view(InputSelect);

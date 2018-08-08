@@ -7,6 +7,7 @@ import doorStore from "../store/doorStore";
 
 const storeDoor = () => {
   localStorage.setItem("storedDoor", JSON.stringify(doorStore.currentDoor));
+  localStorage.setItem("propIndex", doorStore.propIndex);
 };
 
 class AppRouter extends Component {

@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import BackButton from "./BackButton";
+import { titleCase } from "../../misc/utils";
 
 class Header extends Component {
   constructor(props){
@@ -8,11 +9,11 @@ class Header extends Component {
   }
 
   render() {
-    const { title } = this.props;
+    const { title, handler } = this.props;
     return (
       <div className="header">
-        { title === "Home" ? null : <BackButton/> }
-        <span className="title"> { title } </span>
+        { title === "Home" ? null : <BackButton handler={handler} /> }
+        <span className="title"> { titleCase(title) } </span>
       </div>
     );
   }

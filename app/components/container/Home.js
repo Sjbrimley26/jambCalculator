@@ -11,7 +11,6 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    console.log(doorStore.currentDoor);
     doorStore.goBack = false;
   }
 

@@ -6,12 +6,10 @@ const doorStore = store({
     JSON.parse(localStorage.getItem("storedDoor")) :
     {},
   currentOrder: [],
-  currentProps: [],
 
   setDoorProperty(property) {
     return function(value) {
       doorStore.currentDoor[property] = value;
-      doorStore.currentProps.push(property);
     };
   },
 
@@ -21,9 +19,36 @@ const doorStore = store({
 
   resetCurrentDoor() {
     let tempDoor = {...doorStore.currentDoor};
+    doorStore.propIndex = 0;
     doorStore.currentDoor = {};
     return tempDoor;
-  }
+  },
+
+  incrementPropIndex() {
+    if ( doorStore.propIndex <= doorStore.propStates.length - 2 ) {
+      doorStore.propIndex++;
+    }
+  },
+
+  decrementPropIndex() {
+    if ( doorStore.propIndex >= 1 ) {
+      doorStore.propIndex--;
+    }
+  },
+
+  propStates: [ // Needs to be ordered
+    "build",
+    "location",
+    "material",
+    "jamb_width",
+    "height",
+    "swing",
+    "sidelites"
+  ],
+  
+  propIndex: localStorage.getItem("propIndex") ?
+    localStorage.getItem("propIndex") :
+    0,
   
 });
 
