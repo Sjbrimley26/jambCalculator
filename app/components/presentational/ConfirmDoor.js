@@ -21,17 +21,18 @@ class ConfirmDoor extends Component {
             handler={this.goBack}
           />
           <div className="mainContent">
-            {
-              Object.entries(this.props.door).map((item, i) => {
-                const [ prop, val ] = item;
-                if ( prop === 'complete' ) return null;
-                return (
-                  <div key={i}>
-                    { `${titleCase(prop)}: ${val}` }
-                  </div>
-                )
-              })
-            }
+            <div className="confirmationDetails">
+              {
+                Object.entries(this.props.door).map((item, i) => {
+                  const [ prop, val ] = item;
+                  return (
+                    <div key={i} className="detailLine" >
+                      { `${titleCase(prop)}: ${val}` }
+                    </div>
+                  )
+                })
+              }
+            </div>
           </div>
         </div>
     );

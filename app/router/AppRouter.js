@@ -8,21 +8,22 @@ import ConfirmDoor from "../components/presentational/ConfirmDoor";
 import { view } from "react-easy-state";
 import doorStore from "../store/doorStore";
 
-const storeDoor = () => {
+const syncStorage = () => {
   localStorage.setItem("storedDoor", JSON.stringify(doorStore.currentDoor));
   localStorage.setItem("propIndex", doorStore.propIndex);
+  localStorage.setItem("requiredProps", JSON.stringify(doorStore.requiredProps));
 };
 
 class AppRouter extends Component {
 
   componentDidMount(){
-    window.addEventListener("beforeunload", storeDoor);
+    window.addEventListener("beforeunload", syncStorage);
   }
 
   componentWillUnmount(){
-    window.removeEventListener("beforeunload", storeDoor);
+    window.removeEventListener("beforeunload", syncStorage);
 
-    storeDoor();
+    syncStorage();
   }
 
   render() {

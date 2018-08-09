@@ -33,6 +33,10 @@ const Inputs = ({
     return arr.map(item => createRadioInput(item));
   }
 
+  const createTextInput = id => {
+
+  };
+
   switch(option) {
     case "build":
       inputs = createArrayOfRadioInputs([
@@ -122,6 +126,7 @@ const Inputs = ({
 
     case "handing":
       inputs = createArrayOfRadioInputs([ "Left", "Right" ]);
+      break;
 
     case "hinge_finish":
       inputs = createArrayOfRadioInputs([

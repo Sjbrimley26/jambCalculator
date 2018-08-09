@@ -1,15 +1,26 @@
 import { store } from 'react-easy-state';
 
 const doorStore = store({
+
   currentDoor: localStorage.getItem("storedDoor") ?
     JSON.parse(localStorage.getItem("storedDoor")) :
-    {
-      complete: false
-    },
+    {},
+
   currentOrder: [],
 
-  checkIfDoorComplete() {
-    const { location, build } = doorStore;
+  requiredProps: localStorage.getItem("requiredProps") ?
+    JSON.parse(localStorage.getItem("requiredProps")) :
+    [
+      "build",
+      "location"
+    ],
+  
+  propIndex: localStorage.getItem("propIndex") ?
+    localStorage.getItem("propIndex") :
+    0,
+
+  setRequiredProps() {
+    const { location, build } = doorStore.currentDoor;
 
     const globalRequiredProps = [
       "build",
@@ -72,15 +83,22 @@ const doorStore = store({
         break;
       
       default:
-        return false;
+        requiredProps = [
+          "build",
+          "location"
+        ];
+        break;
     }
 
-    let doorIsComplete = requiredProps.every(prop => {
+    doorStore.requiredProps = requiredProps;
+  },
+
+  checkIfDoorComplete() {
+    let doorIsComplete = doorStore.requiredProps.every(prop => {
       return doorStore.currentDoor.hasOwnProperty(prop);
     });
 
     if ( doorIsComplete ) {
-      doorStore.currentDoor.complete = true;
       return true;
     } else {
       return false;
@@ -90,6 +108,9 @@ const doorStore = store({
   setDoorProperty(property) {
     return function(value) {
       doorStore.currentDoor[property] = value;
+      if ( ["build", "location"].includes(property) ) {
+        doorStore.setRequiredProps();
+      }
     };
   },
 
@@ -100,16 +121,20 @@ const doorStore = store({
   resetCurrentDoor() {
     let tempDoor = {...doorStore.currentDoor};
     doorStore.propIndex = 0;
-    doorStore.currentDoor = {
-      complete: false
-    };
+    doorStore.currentDoor = {};
+    doorStore.requiredProps = [
+      "build",
+      "location"
+    ];
     return tempDoor;
   },
 
   incrementPropIndex() {
-    if ( doorStore.propIndex <= doorStore.propStates.length - 2 ) {
+    if ( doorStore.propIndex <= doorStore.requiredProps.length - 2 ) {
       doorStore.propIndex++;
+      return true;
     }
+    return false;
   },
 
   decrementPropIndex() {
@@ -117,20 +142,6 @@ const doorStore = store({
       doorStore.propIndex--;
     }
   },
-
-  propStates: [ // Needs to be ordered
-    "build",
-    "location",
-    "material",
-    "jamb_width",
-    "height",
-    "swing",
-    "sidelites"
-  ],
-  
-  propIndex: localStorage.getItem("propIndex") ?
-    localStorage.getItem("propIndex") :
-    0,
   
 });
 

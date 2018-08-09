@@ -20,54 +20,24 @@ class Builder extends Component {
     this.goBack = this.goBack.bind(this);
     this.goHome = this.goHome.bind(this);
 
-    const { propStates } = doorStore;
-
     this.state = {
       selected_value: undefined,
-      currentProp: propStates[doorStore.propIndex]
+      currentProp: doorStore.requiredProps[doorStore.propIndex]
     };
   }
 
-  navTo = (url) => {
-    return this.props.history.push(url);
-  }
-
-  // I should use requiredProps instead of propStates
-  // just have them walk through the first two to determine
-  // which props they need to have then I should be able to step
-  // through the array the same way
-  // without having to check where it should end
-  // I probably don't need doorStore.currentDoor.complete either
-
-  selectOption() { // I should clean up this function
+  selectOption() {
     if ( this.state.selected_value ) {
-
-      let { propStates } = doorStore;
+      
       doorStore.setDoorProperty(this.state.currentProp)(this.state.selected_value);
 
-      // Upon selecting the last option...
-      if ( 
-        this.state.currentProp === "sidelites" ||
-        (doorStore.currentDoor.location === "Interior" && this.state.currentProp === "height") 
-      ) {
-        // Redirect to door confirmation
-        // But I should redirect to an additional details page
-        // Or I could just add more build options and be more careful about the indices and stuff
-        this.props.history.push("confirmDoor")
-      } else {
-
-        // skip a few indices so we don't gather irrelevant details
-        if ( doorStore.currentDoor.build === "Bore and Dap" && this.state.currentProp === "location" ) {
-          doorStore.incrementPropIndex();
-          doorStore.incrementPropIndex();
-        }
-  
-        doorStore.incrementPropIndex();
+      if ( doorStore.incrementPropIndex() && !doorStore.checkIfDoorComplete() ) {
         this.setState({
-          currentProp: propStates[doorStore.propIndex],
+          currentProp: doorStore.requiredProps[doorStore.propIndex],
           selected_value: undefined
         });
-
+      } else {
+        this.props.history.push("confirmDoor");
       }
 
     } else {
@@ -81,19 +51,18 @@ class Builder extends Component {
     });
   }
 
-  resetDoor(){
+  resetDoor() {
     doorStore.resetCurrentDoor();
     this.setState({
       currentProp: "build"
     });
   }
 
-  goBack(){
-    const { propStates } = doorStore;
+  goBack() {
     doorStore.resetDoorProperty(this.currentProp);
     doorStore.decrementPropIndex();
     this.setState({
-      currentProp: propStates[doorStore.propIndex],
+      currentProp: doorStore.requiredProps[doorStore.propIndex],
       selected_value: undefined
     });
   }
@@ -104,9 +73,6 @@ class Builder extends Component {
   }
 
   render() {
-
-    // console.log("RENDER", doorStore.currentDoor);
-    // console.log(doorStore.currentDoor);
 
     return (
       <div className="mainWindow">

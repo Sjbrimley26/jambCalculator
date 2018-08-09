@@ -140,3 +140,14 @@ body, html {
   left: calc(100% - 150px);
   top: calc(100% - 20px);
 }
+
+.confirmationDetails {
+  margin: 10px;
+  background: rgb(239, 252, 255);
+  padding: 20px;
+
+  .detailLine {
+    margin-bottom: 5px;
+    box-shadow: 0 1px;
+  }
+}
