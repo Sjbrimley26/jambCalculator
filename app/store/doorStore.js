@@ -18,30 +18,72 @@ const doorStore = store({
       "handing"
     ];
 
+    const prehungProps = [
+      "material",
+      "jamb_width",
+      "hinge_finish"
+    ];
+
+    const exteriorProps = [
+      "swing",
+      "is_fire_rated",
+      "sidelites",
+      "threshold_finish"
+    ];
+
+    const bdProps = [
+      "hinge_radius",
+      "hinge_size",
+      "hinge_locations",
+      "bore_locations"
+    ];
+
     let requiredProps;
 
     switch(true) {
       case location === "Interior" && build === "Pre-Hung Single":
-        requiredProps = [
+        requiredProps = [ 
           ...globalRequiredProps,
-          
-        ]
+          ...prehungProps
+        ];
         break;
       
       case location === "Interior" && build === "Pre-Hung Double":
+        requiredProps = [
+          ...globalRequiredProps,
+          ...prehungProps,
+          "pair_type"
+        ];
         break;
       
-      case location === "Exterior" && build === "Pre-Hung Single":
-        break;
-
-      case location === "Exterior" && build === "Pre-Hung Double":
+      case location === "Exterior" && build.indexOf("Pre-Hung") >= 0:
+        requiredProps = [
+          ...globalRequiredProps,
+          ...prehungProps,
+          ...exteriorProps
+        ];
         break;
       
       case build === "Bore and Dap":
+        requiredProps = [
+          ...globalRequiredProps,
+          ...bdProps
+        ];
         break;
       
       default:
         return false;
+    }
+
+    let doorIsComplete = requiredProps.every(prop => {
+      return doorStore.currentDoor.hasOwnProperty(prop);
+    });
+
+    if ( doorIsComplete ) {
+      doorStore.currentDoor.complete = true;
+      return true;
+    } else {
+      return false;
     }
   },
 

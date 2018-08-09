@@ -3,7 +3,7 @@ import { withRouter } from "react-router";
 
 import Header from "../presentational/Header";
 import Description from "../presentational/Description";
-import InputSelect from "../presentational/InputSelect";
+import InputSelect from "../container/InputSelect";
 import ForwardArrow from "../presentational/ForwardArrow";
 import ResetButton from "../presentational/ResetButton";
 
@@ -31,6 +31,13 @@ class Builder extends Component {
   navTo = (url) => {
     return this.props.history.push(url);
   }
+
+  // I should use requiredProps instead of propStates
+  // just have them walk through the first two to determine
+  // which props they need to have then I should be able to step
+  // through the array the same way
+  // without having to check where it should end
+  // I probably don't need doorStore.currentDoor.complete either
 
   selectOption() { // I should clean up this function
     if ( this.state.selected_value ) {

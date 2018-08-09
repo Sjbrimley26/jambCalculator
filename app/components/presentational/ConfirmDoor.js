@@ -24,6 +24,7 @@ class ConfirmDoor extends Component {
             {
               Object.entries(this.props.door).map((item, i) => {
                 const [ prop, val ] = item;
+                if ( prop === 'complete' ) return null;
                 return (
                   <div key={i}>
                     { `${titleCase(prop)}: ${val}` }
