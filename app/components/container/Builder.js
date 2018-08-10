@@ -1,9 +1,11 @@
 import React, { Component } from "react";
 import { withRouter } from "react-router";
+import _ from  "lodash";
 
 import Header from "../presentational/Header";
 import Description from "../presentational/Description";
-import InputSelect from "../container/InputSelect";
+import RadioInputSelect from "./RadioInputSelect";
+import TextInputSelect from "./TextInputSelect";
 import ForwardArrow from "../presentational/ForwardArrow";
 import ResetButton from "../presentational/ResetButton";
 
@@ -16,6 +18,7 @@ class Builder extends Component {
 
     this.selectOption = this.selectOption.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.verifyBoreAndHingeProps = this.verifyBoreAndHingeProps.bind(this);
     this.resetDoor = this.resetDoor.bind(this);
     this.goBack = this.goBack.bind(this);
     this.goHome = this.goHome.bind(this);
@@ -26,12 +29,36 @@ class Builder extends Component {
     };
   }
 
+  verifyBoreAndHingeProps() {
+    const { selected_value } = this.state;
+    const keys = Object.keys(selected_value)
+    if ( typeof selected_value === "object" ) {
+      if ( keys.includes("Hinge 1") ) {
+        if (
+          !selected_value[keys[0]] ||
+          !selected_value[keys[1]] ||
+          !selected_value[keys[2]]
+        ) {
+          return false;
+        }
+      }
+      if ( keys.includes("Bore 1") ) {
+        if (
+          !selected_value[keys[0]]
+        ) {
+          return false;
+        }
+      }
+    }
+    return true;
+  }
+
   selectOption() {
-    if ( this.state.selected_value ) {
+    if ( this.state.selected_value && this.verifyBoreAndHingeProps() ) {
       
       doorStore.setDoorProperty(this.state.currentProp)(this.state.selected_value);
 
-      if ( doorStore.incrementPropIndex() && !doorStore.checkIfDoorComplete() ) {
+      if ( doorStore.incrementPropIndex() ) {
         this.setState({
           currentProp: doorStore.requiredProps[doorStore.propIndex],
           selected_value: undefined
@@ -46,9 +73,15 @@ class Builder extends Component {
   }
 
   handleInputChange( event ) {
-    this.setState({
-      selected_value: event.target.value
-    });
+    if ( event.target ) { // radio inputs
+      this.setState({
+        selected_value: event.target.value
+      });
+    } else { // text inputs, sets a whole object instead of a string
+      this.setState({
+        selected_value: event
+      })
+    }
   }
 
   resetDoor() {
@@ -74,29 +107,41 @@ class Builder extends Component {
 
   render() {
 
+    const isTextInput = ["hinge_locations", "bore_locations"]
+      .includes(this.state.currentProp);
+
     return (
       <div className="mainWindow">
+
         <Header 
           title={ this.state.currentProp }
           handler={ this.state.currentProp === "build" ? this.goHome : this.goBack }
-          />
+        />
+
         <div className="mainContent">
 
           < Description option={this.state.currentProp} />
 
-          < InputSelect 
-            selectOption={this.selectOption} 
-            handleInputChange={this.handleInputChange}
-            option={this.state.currentProp}
-            selected_value={this.state.selected_value}
-          />
+          {
+            isTextInput ?
+                < TextInputSelect
+                  handleInputChange={this.handleInputChange}
+                  option={this.state.currentProp}
+                  selected_value={this.state.selected_value}
+                /> :
+                < RadioInputSelect 
+                  handleInputChange={this.handleInputChange}
+                  option={this.state.currentProp}
+                  selected_value={this.state.selected_value}
+                />
+          }
 
           < ResetButton
             handler={this.resetDoor}
           />
 
           < ForwardArrow
-            handler={this.selectOption}
+            handler = { this.selectOption }
           />
 
         </div>

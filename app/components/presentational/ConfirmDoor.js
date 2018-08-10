@@ -25,11 +25,30 @@ class ConfirmDoor extends Component {
               {
                 Object.entries(this.props.door).map((item, i) => {
                   const [ prop, val ] = item;
-                  return (
-                    <div key={i} className="detailLine" >
-                      { `${titleCase(prop)}: ${val}` }
-                    </div>
-                  )
+                  const valIsObject = typeof val === "object";
+                  if (valIsObject) {
+                    return (
+                      <div key={i} className="detailLine" >
+                        { 
+                          `${titleCase(prop)}: ` + 
+                          `${Object.keys(val).map(key => {
+                            if (val[key]) {
+                              return (
+                                ` ${key}: ${val[key]}\"`
+                              );
+                            }
+                            return null;
+                          })}` 
+                        }
+                      </div>
+                    );
+                  } else {
+                    return (
+                      <div key={i} className="detailLine" >
+                        { `${titleCase(prop)}: ${val}` }
+                      </div>
+                    );
+                  }
                 })
               }
             </div>

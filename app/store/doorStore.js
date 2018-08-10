@@ -62,8 +62,8 @@ const doorStore = store({
       case location === "Interior" && build === "Pre-Hung Double":
         requiredProps = [
           ...globalRequiredProps,
-          ...prehungProps,
-          "pair_type"
+          "pair_type",
+          ...prehungProps
         ];
         break;
       
@@ -91,18 +91,6 @@ const doorStore = store({
     }
 
     doorStore.requiredProps = requiredProps;
-  },
-
-  checkIfDoorComplete() {
-    let doorIsComplete = doorStore.requiredProps.every(prop => {
-      return doorStore.currentDoor.hasOwnProperty(prop);
-    });
-
-    if ( doorIsComplete ) {
-      return true;
-    } else {
-      return false;
-    }
   },
 
   setDoorProperty(property) {

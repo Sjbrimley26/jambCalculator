@@ -44,8 +44,8 @@ const Description = ({ option }) => {
       description = "Please select the type of pair.";
       break;
     
-    case "is_fire_rated":
-      description = "Please choose whether the door will be fire rated or not.";
+    case "is_self_closing":
+      description = "Please choose whether the door will have self-closing hinges.";
       break;
     
     case "hinge_finish":
@@ -57,11 +57,11 @@ const Description = ({ option }) => {
       break;
     
     case "hinge_locations":
-      description = "Please enter the distance from the top of the door to the top of each hinge.";
+      description = "Please enter the distance in inches from the top of the door to the top of each hinge.";
       break;
     
     case "bore_locations":
-      description = "Please enter the distance from the top of the door to the center of each bore.";
+      description = "Please enter the distance in inches from the top of the door to the center of each bore.";
       break;
     
     case "handing":

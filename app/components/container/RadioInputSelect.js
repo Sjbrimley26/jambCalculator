@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
-// import { titleCase } from "../../misc/utils";
 
 const Inputs = ({
   option, 
@@ -32,10 +31,6 @@ const Inputs = ({
   const createArrayOfRadioInputs = arr => {
     return arr.map(item => createRadioInput(item));
   }
-
-  const createTextInput = id => {
-
-  };
 
   switch(option) {
     case "build":
@@ -120,7 +115,7 @@ const Inputs = ({
       ]);
       break;
 
-    case "is_fire_rated":
+    case "is_self_closing":
       inputs = createArrayOfRadioInputs([ "Yes", "No" ]);
       break;
 
@@ -143,8 +138,6 @@ const Inputs = ({
       ]);
       break;
 
-    // TODO : Add cases for hinge_locations and bore_locations
-    // They will need text inputs
   }
 
   return (
@@ -156,7 +149,7 @@ const Inputs = ({
   );
 };
 
-class InputSelect extends Component {
+class RadioInputSelect extends Component {
   constructor(props){
     super(props);
   }
@@ -174,4 +167,4 @@ class InputSelect extends Component {
   }
 }
 
-export default view(InputSelect);
+export default view(RadioInputSelect);
