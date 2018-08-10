@@ -288,8 +288,9 @@ const getPricingDetails = doorOptions => {
     let {
       handing,
       location, // should be irrelevant
-      hinge_measurements,
-      bore_measurements,
+      hinge_locations,
+      bore_locations,
+      hinge_radius,
       hinge_size, // I think these are the same price ???
       ...details
     } = doorOptions;
@@ -390,6 +391,7 @@ const getPrice = doorOptions => {
     return price;
 
   } catch (err) {
+    console.log(err);
     return "Price not found!";
   }
 };

@@ -20,7 +20,7 @@ class ConfirmDoor extends Component {
     let taxPrice;
     if (goodPrice) taxPrice = (doorPrice * .0805).toFixed(2);
     let totalPrice;
-    if (goodPrice) totalPrice = parseFloat(doorPrice) + parseFloat(taxPrice);
+    if (goodPrice) totalPrice = (parseFloat(doorPrice) * 100 + parseFloat(taxPrice) * 100) / 100;
 
     return (
       <div className="mainWindow">
