@@ -111,7 +111,7 @@ const Inputs = ({
       inputs = createArrayOfRadioInputs([
         "French Pair",
         "Ball-Catch Pair",
-        "Bi-Pass Pair"
+        // "Bi-Pass Pair" Not ready for this yet: you need the door width
       ]);
       break;
 

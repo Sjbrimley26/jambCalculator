@@ -37,7 +37,7 @@ const doorStore = store({
 
     const exteriorProps = [
       "swing",
-      "is_fire_rated",
+      "is_self_closing",
       "sidelites",
       "threshold_finish"
     ];

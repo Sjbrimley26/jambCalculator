@@ -149,5 +149,35 @@ body, html {
   .detailLine {
     margin-bottom: 5px;
     box-shadow: 0 1px;
+    min-height: 1em;
+
+    &--price {
+      text-align: right;
+    }
+  }
+}
+
+@media print {
+  * {
+    background: white;
+    color: black;
+    box-shadow: none!important;
+    padding: 0!important;
+    margin: 0!important;
+    border: none!important;
+
+    .footer {
+      display: none;
+    }
+
+    .mainContent {
+      height: 0;
+    }
+
+  }
+
+  *::after {
+    box-shadow: none!important;
+    display: none!important;
   }
 }

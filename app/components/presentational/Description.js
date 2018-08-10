@@ -45,7 +45,9 @@ const Description = ({ option }) => {
       break;
     
     case "is_self_closing":
-      description = "Please choose whether the door will have self-closing hinges.";
+      description = 
+        "Please choose whether the door will have self-closing hinges. " +
+        "(If the door goes to an enclosed garage, these are required by regulation)";
       break;
     
     case "hinge_finish":

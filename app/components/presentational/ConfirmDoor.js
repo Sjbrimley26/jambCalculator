@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Header from "./Header";
 
 import { titleCase } from "../../misc/utils";
+import { getPrice } from "../../calculator";
 
 class ConfirmDoor extends Component {
   constructor(props){
@@ -14,10 +15,17 @@ class ConfirmDoor extends Component {
   }
 
   render() {
+    let doorPrice = getPrice(this.props.door);
+    let goodPrice = typeof doorPrice === "number";
+    let taxPrice;
+    if (goodPrice) taxPrice = (doorPrice * .0805).toFixed(2);
+    let totalPrice;
+    if (goodPrice) totalPrice = parseFloat(doorPrice) + parseFloat(taxPrice);
+
     return (
       <div className="mainWindow">
           < Header 
-            title="Confirm Door"
+            title="Confirm Build"
             handler={this.goBack}
           />
           <div className="mainContent">
@@ -50,6 +58,16 @@ class ConfirmDoor extends Component {
                     );
                   }
                 })
+              }
+              <div className="detailLine"/>
+              <div className="detailLine detailLine--price">Subtotal : ${doorPrice}</div>
+              {
+                goodPrice ?
+                <div>
+                  <div className="detailLine detailLine--price">Tax : ${taxPrice}</div>
+                  <div className="detailLine detailLine--price">Total : ${totalPrice}</div>
+                </div> :
+                null
               }
             </div>
           </div>
