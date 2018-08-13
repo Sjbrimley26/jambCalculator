@@ -153,6 +153,11 @@ body, html {
 
     &--price {
       text-align: right;
+
+      & span {
+        background: rgb(208, 237, 244);
+        padding: 3px 10px 1px 10px;
+      }
     }
   }
 }

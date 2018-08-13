@@ -20,20 +20,22 @@ class ConfirmDoor extends Component {
     let taxPrice;
     if (goodPrice) taxPrice = (doorPrice * .0805).toFixed(2);
     let totalPrice;
-    if (goodPrice) totalPrice = (parseFloat(doorPrice) * 100 + parseFloat(taxPrice) * 100) / 100;
+    if (goodPrice) totalPrice = ((parseFloat(doorPrice) * 100 + parseFloat(taxPrice) * 100)/ 100).toFixed(2);
 
     return (
-      <div className="mainWindow">
+      <div className="mainWindow">   
           < Header 
             title="Confirm Build"
             handler={this.goBack}
           />
           <div className="mainContent">
             <div className="confirmationDetails">
+
               {
                 Object.entries(this.props.door).map((item, i) => {
                   const [ prop, val ] = item;
                   const valIsObject = typeof val === "object";
+                  
                   if (valIsObject) {
                     return (
                       <div key={i} className="detailLine" >
@@ -50,7 +52,9 @@ class ConfirmDoor extends Component {
                         }
                       </div>
                     );
-                  } else {
+                  }  
+
+                  else {
                     return (
                       <div key={i} className="detailLine" >
                         { `${titleCase(prop)}: ${val}` }
@@ -59,16 +63,25 @@ class ConfirmDoor extends Component {
                   }
                 })
               }
+
               <div className="detailLine"/>
-              <div className="detailLine detailLine--price">Subtotal : ${doorPrice}</div>
+              <div className="detailLine detailLine--price">
+                <span>Subtotal : { goodPrice ? '$' : null }{doorPrice}</span>
+              </div>
+
               {
                 goodPrice ?
                 <div>
-                  <div className="detailLine detailLine--price">Tax : ${taxPrice}</div>
-                  <div className="detailLine detailLine--price">Total : ${totalPrice}</div>
+                  <div className="detailLine detailLine--price">
+                    <span>Tax : $&ensp;{taxPrice}</span>
+                  </div>
+                  <div className="detailLine detailLine--price">
+                    <span>Total : ${totalPrice}</span>
+                  </div>
                 </div> :
                 null
               }
+
             </div>
           </div>
         </div>

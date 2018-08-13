@@ -15,174 +15,90 @@ const _ = require("lodash");
 
 */
 
+const createBuildSet = (location, build, height, material, priceArr) => {
+
+  const createBuild = (location, build, height, material, jamb_width, price) => {
+    return [{
+        location,
+        build,
+        jamb_width,
+        height,
+        material
+      },
+      price
+    ];
+  };
+
+  const sizes = location == "Interior" ?
+    [
+      "4-5/8\"",
+      "5-3/8\"",
+      "6-5/8\"",
+      "7-1/2\""
+    ] :
+    [
+      "5-3/8\"",
+      "7-1/2\""
+    ];
+
+  return sizes.map((size, i) => {
+    return createBuild(location, build, height, material, size, priceArr[i]);
+  });
+};
+
 // Currently only contains the FJ Pine prices
 const allBuildsAndOptions = new Map([
-  // Pre hung FJ Singles
-  // 68
-  [
-    { // Details
-      location: "Interior",
-      build: "Pre-Hung Single",
-      jamb_width: "4-5/8\"",
-      height: "6\'8\"",
-      material: "FJ Pine"
-    },
-    26.19 // Price
-  ],
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Single",
-      jamb_width: "5-3/8\"",
-      height: "6\'8\"",
-      material: "FJ Pine"
-    },
-    34.2
-  ],
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Single",
-      jamb_width: "6-5/8\"",
-      height: "6\'8\"",
-      material: "FJ Pine"
-    },
-    41.29
-  ],
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Single",
-      jamb_width: "7-1/2\"",
-      height: "6\'8\"",
-      material: "FJ Pine"
-    },
-    46.02
-  ],
-  // 80
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Single",
-      jamb_width: "4-5/8\"",
-      height: "8\'0\"",
-      material: "FJ Pine"
-    },
-    31.98
-  ],
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Single",
-      jamb_width: "5-3/8\"",
-      height: "8\'0\"",
-      material: "FJ Pine"
-    },
-    41.25
-  ],
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Single",
-      jamb_width: "6-5/8\"",
-      height: "8\'0\"",
-      material: "FJ Pine"
-    },
-    48.60
-  ],
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Single",
-      jamb_width: "7-1/2\"",
-      height: "8\'0\"",
-      material: "FJ Pine"
-    },
-    55.43
-  ],
-  // Pre-Hung FJ French Pairs
-  // 68
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Double",
-      jamb_width: "4-5/8\"",
-      height: "6\'8\"",
-      material: "FJ Pine"
-    },
-    59.27
-  ],
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Double",
-      jamb_width: "5-3/8\"",
-      height: "6\'8\"",
-      material: "FJ Pine"
-    },
-    68.89
-  ],
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Double",
-      jamb_width: "6-5/8\"",
-      height: "6\'8\"",
-      material: "FJ Pine"
-    },
-    77.39
-  ],
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Double",
-      jamb_width: "7-1/2\"",
-      height: "6\'8\"",
-      material: "FJ Pine"
-    },
-    83.06
-  ],
-  // 80
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Double",
-      jamb_width: "4-5/8\"",
-      height: "8\'0\"",
-      material: "FJ Pine"
-    },
-    69.33
-  ],
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Double",
-      jamb_width: "5-3/8\"",
-      height: "8\'0\"",
-      material: "FJ Pine"
-    },
-    80.46
-  ],
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Double",
-      jamb_width: "6-5/8\"",
-      height: "8\'0\"",
-      material: "FJ Pine"
-    },
-    89.28
-  ],
-  [
-    {
-      location: "Interior",
-      build: "Pre-Hung Double",
-      jamb_width: "7-1/2\"",
-      height: "8\'0\"",
-      material: "FJ Pine"
-    },
-    97.47
-  ],
+
+  ...createBuildSet(
+    "Interior", // Details
+    "Pre-Hung Single",
+    "6\'8\"",
+    "FJ Pine",
+    [
+      26.19, // Prices for each standard jamb width
+      34.2,
+      41.29,
+      46.02
+    ]
+  ),
+  
+  ...createBuildSet(
+    "Interior",
+    "Pre-Hung Single",
+    "8\'0\"",
+    "FJ Pine",
+    [
+      31.98,
+      41.25,
+      48.60,
+      55.43
+    ]
+  ),
+  
+  ...createBuildSet(
+    "Interior",
+    "Pre-Hung Double",
+    "6\'8\"",
+    "FJ Pine", [
+      59.27,
+      68.89,
+      77.39,
+      83.06
+    ]
+  ),
+
+  ...createBuildSet(
+    "Interior",
+    "Pre-Hung Double",
+    "8\'0\"",
+    "FJ Pine", [
+      69.33,
+      80.46,
+      89.28,
+      97.47
+    ]
+  ),
+
   [
     {
       build: "Bore and Dap",
@@ -197,6 +113,7 @@ const allBuildsAndOptions = new Map([
     },
     30
   ],
+
   [
     {
       location: "Exterior",
@@ -330,14 +247,15 @@ const getPricingDetails = doorOptions => {
 };
 
 const getPrice = doorOptions => {
+  console.log(allBuildsAndOptions)
   try {
 
     // So 70's are charged the 68 B&D price and the 80 Pre-Hung price
-    if ( doorOptions.build === "Bore and Dap" && doorOptions.height === "70" ) {
+    if ( doorOptions.build === "Bore and Dap" && doorOptions.height === "7\'0\"" ) {
       doorOptions.height = "6\'8\"";
     }
 
-    if ( doorOptions.build.indexOf("Pre-Hung") >= 0 && doorOptions.height === "70" ) {
+    if ( doorOptions.build.indexOf("Pre-Hung") >= 0 && doorOptions.height === "7\'0\"" ) {
       doorOptions.height = "8\'0\""; 
     }
 
