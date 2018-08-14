@@ -4,6 +4,7 @@ import { HashRouter, Route, Switch } from "react-router-dom";
 import Home from "../components/container/Home";
 import Builder from "../components/container/Builder";
 import ConfirmDoor from "../components/presentational/ConfirmDoor";
+import LoginPage from "../components/container/LoginPage";
 
 import { view } from "react-easy-state";
 import doorStore from "../store/doorStore";
@@ -34,6 +35,7 @@ class AppRouter extends Component {
             <Route path="/" exact render={ props => <Home {...props} /> } />
             <Route path="/build" exact render={ props => <Builder {...props} /> } />
             <Route path="/confirmDoor" exact render={ props => <ConfirmDoor {...props} door={doorStore.currentDoor} /> } />
+            <Route path="/login" exact render={ props => <LoginPage {...props} /> } />
           </Switch>
           <div className="footer">
             <a href="https://icons8.com">Icon pack by Icons8</a>

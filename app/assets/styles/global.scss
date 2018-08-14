@@ -162,6 +162,22 @@ body, html {
   }
 }
 
+.login {
+  margin-top: 40%;
+
+  & input{
+    width: 100%;
+    margin-bottom: 5px;
+    padding-left: 5px;
+  }
+}
+
+.loginLabel {
+  width: 20%;
+  display: inline-block;
+}
+
+
 @media print {
   * {
     background: white;
