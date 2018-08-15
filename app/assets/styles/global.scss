@@ -163,7 +163,9 @@ body, html {
 }
 
 .login {
-  margin-top: 40%;
+  margin: auto;
+  margin-top: 30%;
+  max-width: 400px;
 
   & input{
     width: 100%;

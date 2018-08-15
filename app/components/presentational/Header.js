@@ -9,10 +9,10 @@ class Header extends Component {
   }
 
   render() {
-    const { title, handler } = this.props;
+    const { title, handler, noButton } = this.props;
     return (
       <div className="header">
-        { title === "Home" ? null : <BackButton handler={handler} /> }
+        { noButton ? null : <BackButton handler={handler} /> }
         <span className="title"> { titleCase(title) } </span>
       </div>
     );

@@ -18,7 +18,7 @@ class Home extends Component {
     
     return (
       <div className="mainWindow">
-        <Header title="Home" />
+        <Header title="Home" noButton={true} />
         <div className="mainContent">
           <Link to="/build" className="navLink" > Build Calculator </Link>
         </div>

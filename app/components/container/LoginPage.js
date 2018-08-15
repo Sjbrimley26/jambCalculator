@@ -1,47 +1,70 @@
-import React from "react";
+import React, { Component } from "react";
 import Header from "../presentational/Header"
 import axios from "axios";
+import { Redirect } from "react-router-dom";
 
-const LoginPage = (props) => {
+class LoginPage extends Component {
+  constructor(props){
+    super(props);
 
-  const submitForm = e => {
-    e.preventDefault();
-    let email = e.target.elements[1].value;
-    let password = e.target.elements[2].value;
-    
-    
-    axios({
-      method: "POST",
-      url: "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest/login",
-      body: JSON.stringify({email, password}),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    }).then(data => console.log(data))
-      .catch(err => console.log(err));
-    
+    const alreadyHasToken = localStorage.getItem("token") ? true : false;
 
+    this.state = {
+      loggedIn: alreadyHasToken
+    };
   }
 
-  return (
-    <div className="mainWindow">
-      <Header title={"Login"} /> 
-      <div className="mainContent">
-        <div className="login">
-          <form onSubmit={submitForm.bind(this)}>
-            <fieldset>
-              <label htmlFor="email" className="loginLabel" >Email: </label>
-              <input type="text" name="email" />
-              <br/>
-              <label htmlFor="password" className="loginLabel" >Password: </label>
-              <input type="password" name="password" />
-              <input type="submit" style={{display: "none"}}/>
-            </fieldset>
-          </form>
+  render(){
+
+    const submitForm = e => {
+      e.preventDefault();
+      let email = e.target.elements[1].value;
+      let password = e.target.elements[2].value;
+
+      axios({
+          method: "POST",
+          url: "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest/login",
+          data: JSON.stringify({
+            email,
+            password
+          }),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }).then(res => {
+          if (res.data.token) {
+            this.setState({ loggedIn: true });
+            localStorage.setItem("token", res.data.token);
+          } else {
+            // Show an invalid password alert!
+            console.log(res.data.message);
+          }
+        })
+        .catch(err => console.log(err));
+
+    };
+
+    return (
+      <div className="mainWindow">
+        { this.state.loggedIn ? <Redirect to={{pathname: "/"}}/> : null }
+        <Header title={"Login"} noButton={true} /> 
+        <div className="mainContent">
+          <div className="login">
+            <form onSubmit={submitForm.bind(this)}>
+              <fieldset>
+                <label htmlFor="email" className="loginLabel" >Email: </label>
+                <input type="text" name="email" />
+                <br/>
+                <label htmlFor="password" className="loginLabel" >Password: </label>
+                <input type="password" name="password" />
+                <input type="submit" style={{display: "none"}}/>
+              </fieldset>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
-  )
+    );
+  }
 };
 
 export default LoginPage;

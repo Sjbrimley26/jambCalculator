@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { HashRouter, Route, Switch } from "react-router-dom";
+import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 
 import Home from "../components/container/Home";
 import Builder from "../components/container/Builder";
@@ -16,6 +16,9 @@ const syncStorage = () => {
 };
 
 class AppRouter extends Component {
+  constructor(props) {
+    super(props);
+  }
 
   componentDidMount(){
     window.addEventListener("beforeunload", syncStorage);
@@ -28,9 +31,13 @@ class AppRouter extends Component {
   }
 
   render() {
+    const alreadyHasToken = localStorage.getItem("token") ? true : false;
+    const onLoginPage = window.location.hash.indexOf("login") >= 0;
+
     return (
-      <HashRouter>
+      <HashRouter>        
         <div className="fullscreen">
+        { alreadyHasToken || onLoginPage ? null : <Redirect to={{pathname: "/login"}} />}
           <Switch>
             <Route path="/" exact render={ props => <Home {...props} /> } />
             <Route path="/build" exact render={ props => <Builder {...props} /> } />
