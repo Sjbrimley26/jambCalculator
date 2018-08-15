@@ -21,6 +21,8 @@ class LoginPage extends Component {
       let email = e.target.elements[1].value;
       let password = e.target.elements[2].value;
 
+      if (!email || !password) return alert("Please enter a username and password");
+
       axios({
           method: "POST",
           url: "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest/login",
@@ -33,10 +35,11 @@ class LoginPage extends Component {
           }
         }).then(res => {
           if (res.data.token) {
-            this.setState({ loggedIn: true });
             localStorage.setItem("token", res.data.token);
+            this.setState({ loggedIn: true });
           } else {
             // Show an invalid password alert!
+            alert("Email or password was invalid!");
             console.log(res.data.message);
           }
         })
@@ -46,7 +49,7 @@ class LoginPage extends Component {
 
     return (
       <div className="mainWindow">
-        { this.state.loggedIn ? <Redirect to={{pathname: "/"}}/> : null }
+        { this.state.loggedIn ? <Redirect to="/" /> : null }
         <Header title={"Login"} noButton={true} /> 
         <div className="mainContent">
           <div className="login">
