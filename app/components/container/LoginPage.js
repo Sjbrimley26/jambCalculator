@@ -21,11 +21,14 @@ class LoginPage extends Component {
       let email = e.target.elements[1].value;
       let password = e.target.elements[2].value;
 
+      console.log("Submitted!");
+      
       if (!email || !password) return alert("Please enter a username and password");
 
       axios({
           method: "POST",
-          url: "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest/login",
+          // url: "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest/login",
+          url : "http://localhost:3000/login",
           data: JSON.stringify({
             email,
             password
