@@ -27,8 +27,8 @@ class LoginPage extends Component {
 
       axios({
           method: "POST",
-          // url: "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest/login",
-          url : "http://localhost:3000/login",
+          url: "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest/login",
+          // url : "http://localhost:3000/login",
           data: JSON.stringify({
             email,
             password

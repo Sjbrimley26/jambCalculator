@@ -4,7 +4,7 @@ const _ = require("lodash");
   TODO:
     Add all variants of:
 
-    height: 68, 70, 80 (although 80 and 70 will be the same)
+    height: 68, 80
     build: PH-S, PH-D, PH-BC, B&D
     material: FJ, Solid Pine, KA, Composite
     jamb_width: 3 or less, 4-5/8, 5-3/8, 6-5/8, 7-1/2, 12, 16
@@ -79,7 +79,8 @@ const allBuildsAndOptions = new Map([
     "Interior",
     "Pre-Hung Double",
     "6\'8\"",
-    "FJ Pine", [
+    "FJ Pine", 
+    [
       59.27,
       68.89,
       77.39,
@@ -91,7 +92,8 @@ const allBuildsAndOptions = new Map([
     "Interior",
     "Pre-Hung Double",
     "8\'0\"",
-    "FJ Pine", [
+    "FJ Pine", 
+    [
       69.33,
       80.46,
       89.28,
@@ -114,86 +116,50 @@ const allBuildsAndOptions = new Map([
     30
   ],
 
-  [
-    {
-      location: "Exterior",
-      build: "Pre-Hung Single",
-      jamb_width: "5-3/8\"",
-      height: "6\'8\"",
-      material: "FJ Pine"
-    },
-    80.47
-  ],
-  [
-    {
-      location: "Exterior",
-      build: "Pre-Hung Single",
-      jamb_width: "7-1/2\"",
-      height: "6\'8\"",
-      material: "FJ Pine"
-    },
-    96.57
-  ],
-  [
-    {
-      location: "Exterior",
-      build: "Pre-Hung Single",
-      jamb_width: "5-3/8\"",
-      height: "8\'0\"",
-      material: "FJ Pine"
-    },
-    95.71
-  ],
-  [
-    {
-      location: "Exterior",
-      build: "Pre-Hung Single",
-      jamb_width: "7-1/2\"",
-      height: "8\'0\"",
-      material: "FJ Pine"
-    },
-    118.62
-  ],
-  [
-    {
-      location: "Exterior",
-      build: "Pre-Hung Double",
-      jamb_width: "5-3/8\"",
-      height: "6\'8\"",
-      material: "FJ Pine"
-    },
-    197.40
-  ],
-  [
-    {
-      location: "Exterior",
-      build: "Pre-Hung Double",
-      jamb_width: "7-1/2\"",
-      height: "6\'8\"",
-      material: "FJ Pine"
-    },
-    216.72
-  ],
-  [
-    {
-      location: "Exterior",
-      build: "Pre-Hung Double",
-      jamb_width: "5-3/8\"",
-      height: "8\'0\"",
-      material: "FJ Pine"
-    },
-    229.48
-  ],
-  [
-    {
-      location: "Exterior",
-      build: "Pre-Hung Double",
-      jamb_width: "7-1/2\"",
-      height: "8\'0\"",
-      material: "FJ Pine"
-    },
-    254.50
-  ],
+  ...createBuildSet(
+    "Exterior",
+    "Pre-Hung Single",
+    "6\'8\"",
+    "FJ Pine",
+    [
+      80.47,
+      96.57
+    ]
+  ),
+
+  ...createBuildSet(
+    "Exterior",
+    "Pre-Hung Single",
+    "8\'0\"",
+    "FJ Pine",
+    [
+      95.71,
+      118.62
+    ]
+  ),
+
+  ...createBuildSet(
+    "Exterior",
+    "Pre-Hung Double",
+    "6\'8\"",
+    "FJ Pine",
+    [
+      197.40,
+      216.72
+    ]
+  ),
+
+  ...createBuildSet(
+    "Exterior",
+    "Pre-Hung Double",
+    "8\'0\"",
+    "FJ Pine",
+    [
+      229.48,
+      254.50
+    ]
+  ),
+
 ]);
 
 const getPricingDetails = doorOptions => {
@@ -247,25 +213,26 @@ const getPricingDetails = doorOptions => {
 };
 
 const getPrice = doorOptions => {
-  console.log(allBuildsAndOptions)
   try {
+
+    const tempDoor = {...doorOptions};
 
     // So 70's are charged the 68 B&D price and the 80 Pre-Hung price
     if ( doorOptions.build === "Bore and Dap" && doorOptions.height === "7\'0\"" ) {
-      doorOptions.height = "6\'8\"";
+      tempDoor.height = "6\'8\"";
     }
 
     if ( doorOptions.build.indexOf("Pre-Hung") >= 0 && doorOptions.height === "7\'0\"" ) {
-      doorOptions.height = "8\'0\""; 
+      tempDoor.height = "8\'0\""; 
     }
 
     // So Exterior Doors are grouped into [ 4-5/8, 5-3/8 ] and [ 6-5/8, 7-1/2 ] for pricing
     if ( doorOptions.location === "Exterior" ) {
       if ( _.get(doorOptions, "jamb_width") === "4-5/8\"" ) {
-        doorOptions.jamb_width = "5-3/8\"";
+        tempDoor.jamb_width = "5-3/8\"";
       }
       if ( _.get(doorOptions, "jamb_width") === "6-5/8\"" ) {
-        doorOptions.jamb_width = "7-1/2\"";
+        tempDoor.jamb_width = "7-1/2\"";
       }
     }
 
@@ -273,7 +240,7 @@ const getPrice = doorOptions => {
 
     let price = [...allBuildsAndOptions].filter(build => {
       let [ details, price ] = build;
-      return _.isEqual( details, getPricingDetails(doorOptions) );
+      return _.isEqual( details, getPricingDetails(tempDoor) );
     })[0][1];
 
     // Multiplicatively add price for sidelites. This method should work...
@@ -301,7 +268,7 @@ const getPrice = doorOptions => {
 
     // Self-closing hinges are quite a bit more expensive
     if ( _.get(doorOptions, "is_self_closing") === "Yes" ) {
-      let factor = doorOptions.height === "6\'8\"" ? 29.58 : 39.44;
+      let factor = 16;
       if ( doorOptions.build.indexOf("Double") >= 0 ) factor *= 2;
       price += factor;
     }
