@@ -1,8 +1,31 @@
 import axios from "axios";
 
-const ax = axios.create({
-  baseURL: "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest",
-});
+const ax = ( options ) => {
+  const { url, ...details } = options;
+  
+  return axios({
+    "url": "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest" + url,
+    // baseURL : "http://localhost:3000",
+    ...details
+  });
+}; // Returns a promise that should contain the response
+
+const axWithToken = ( options ) => {
+  const token = localStorage.getItem("token");
+  console.log(token, options);
+
+  const { headers, url, ...details } = options;
+
+  return axios({
+    baseURL: "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest" + url,
+    // baseURL : "http://localhost:3000",
+    "headers": {
+      Authorization: `Bearer ${token}`,
+      ...headers
+    },
+    ...details
+  });
+};
 
 const onAxiosError = error => {
   if (error.response) {
@@ -25,17 +48,25 @@ const onAxiosError = error => {
   console.log(error.config);
 };
 
-const profileGET = ()  => {
-  const token = localStorage.getItem("token");
-  
-  axios({
+const profileGET = () => {
+  let response;
+
+  axWithToken({
     method: "GET",
-    // url: "http://localhost:3000/profile"
-    url: "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest/profile",
+    url: "/profile",
     headers: {
-      Authorization: "Bearer " + token,
       'Content-Type': 'text/plain'
     },
-  }).then(res => console.log(res.data))
-    .catch(onAxiosError);
+  }).then(res => response = res)
+  .catch(err => response = err)
+
+  return response;
+
 };
+
+
+module.exports = {
+  profileGET,
+  onAxiosError
+};
+

@@ -5,6 +5,8 @@ import { Link } from "react-router-dom"
 import Header from "../presentational/Header";
 import doorStore from "../../store/doorStore";
 
+import { profileGET } from "../../router/axiosConfig";
+
 class Home extends Component {
   constructor(props) {
     super(props);
@@ -12,6 +14,10 @@ class Home extends Component {
 
   componentDidMount() {
     doorStore.goBack = false;
+    
+    let response = profileGET();
+    console.log(response);
+
   }
 
   render() {
