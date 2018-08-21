@@ -2,14 +2,17 @@ import React, { Component } from "react";
 import { withRouter } from "react-router";
 import _ from  "lodash";
 
-import Header from "../presentational/Header";
-import Description from "../presentational/Description";
 import RadioInputSelect from "./RadioInputSelect";
 import TextInputSelect from "./TextInputSelect";
-import ForwardArrow from "../presentational/ForwardArrow";
-import ResetButton from "../presentational/ResetButton";
 
-import doorStore from "../../store/doorStore";
+import {
+  Header,
+  Description,
+  ForwardArrow,
+  ResetButton
+} from "../presentational";
+
+import { doorStore } from "../../store";
 import { view } from "react-easy-state";
 
 class Builder extends Component {

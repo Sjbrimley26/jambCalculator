@@ -19,6 +19,9 @@ const doorStore = store({
     localStorage.getItem("propIndex") :
     0,
 
+  // When "building" a door, the Builder component steps through
+  // the required props to get all the required user inputs.
+
   setRequiredProps() {
     const { location, build } = doorStore.currentDoor;
 

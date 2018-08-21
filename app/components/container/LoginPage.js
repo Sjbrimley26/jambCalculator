@@ -1,7 +1,8 @@
 import React, { Component } from "react";
-import Header from "../presentational/Header"
+import { Header } from "../presentational"
 import axios from "axios";
 import { Redirect } from "react-router-dom";
+import { userStore } from "../../store";
 
 class LoginPage extends Component {
   constructor(props){
@@ -36,9 +37,10 @@ class LoginPage extends Component {
           headers: {
             'Content-Type': 'application/json'
           }
-        }).then(res => {
+        }).then(async res => {
           if (res.data.token) {
             localStorage.setItem("token", res.data.token);
+            await userStore.getUser();
             this.setState({ loggedIn: true });
           } else {
             // Show an invalid password alert!
@@ -53,7 +55,7 @@ class LoginPage extends Component {
     return (
       <div className="mainWindow">
         { this.state.loggedIn ? <Redirect to="/" /> : null }
-        <Header title={"Login"} noButton={true} /> 
+        <Header title="Login" noButton={true} /> 
         <div className="mainContent">
           <div className="login">
             <form onSubmit={submitForm.bind(this)}>

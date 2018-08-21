@@ -5,20 +5,20 @@ const ax = ( options ) => {
   
   return axios({
     "url": "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest" + url,
-    // baseURL : "http://localhost:3000",
+    // baseURL : "http://localhost:3000" + url,
     ...details
   });
 }; // Returns a promise that should contain the response
 
+
 const axWithToken = ( options ) => {
   const token = localStorage.getItem("token");
-  console.log(token, options);
 
   const { headers, url, ...details } = options;
 
   return axios({
     baseURL: "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest" + url,
-    // baseURL : "http://localhost:3000",
+    // baseURL : "http://localhost:3000" + url,
     "headers": {
       Authorization: `Bearer ${token}`,
       ...headers
@@ -26,6 +26,7 @@ const axWithToken = ( options ) => {
     ...details
   });
 };
+
 
 const onAxiosError = error => {
   if (error.response) {
@@ -48,19 +49,21 @@ const onAxiosError = error => {
   console.log(error.config);
 };
 
-const profileGET = () => {
+
+const profileGET = async () => {
   let response;
 
-  axWithToken({
+  await axWithToken({
     method: "GET",
     url: "/profile",
     headers: {
       'Content-Type': 'text/plain'
     },
-  }).then(res => response = res)
+  })
+  .then(res => response = res.data)
   .catch(err => response = err)
 
-  return response;
+  return response
 
 };
 

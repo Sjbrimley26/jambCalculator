@@ -1,10 +1,14 @@
 import React, { Component } from "react";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 
-import Home from "../components/container/Home";
-import Builder from "../components/container/Builder";
-import ConfirmDoor from "../components/presentational/ConfirmDoor";
-import LoginPage from "../components/container/LoginPage";
+import { ConfirmDoor } from "../components/presentational";
+
+import {
+  Home,
+  Builder,
+  LoginPage,
+  UserPage
+} from "../components/container";
 
 import { view } from "react-easy-state";
 import doorStore from "../store/doorStore";
@@ -56,6 +60,7 @@ class AppRouter extends Component {
             <RouteCreate path="/build" exact onEnter={verifyToken} render={ props => <Builder {...props} /> } />
             <RouteCreate path="/confirmDoor" exact onEnter={verifyToken} render={ props => <ConfirmDoor {...props} door={doorStore.currentDoor} /> } />
             <RouteCreate path="/login" exact render={ props => <LoginPage {...props} /> } />
+            <RouteCreate path="/profile" render={ props => <UserPage {...props}/> } />
           </Switch>
           <div className="footer">
             <a href="https://icons8.com">Icon pack by Icons8</a>

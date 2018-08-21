@@ -2,22 +2,17 @@ import React, { Component } from "react";
 import { withRouter } from 'react-router';
 import { view } from 'react-easy-state';
 import { Link } from "react-router-dom"
-import Header from "../presentational/Header";
-import doorStore from "../../store/doorStore";
+import { Header } from "../presentational";
 
-import { profileGET } from "../../router/axiosConfig";
+import { doorStore, userStore } from "../../store";
 
 class Home extends Component {
   constructor(props) {
     super(props);
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     doorStore.goBack = false;
-    
-    let response = profileGET();
-    console.log(response);
-
   }
 
   render() {
