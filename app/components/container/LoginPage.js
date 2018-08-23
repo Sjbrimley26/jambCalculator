@@ -21,8 +21,6 @@ class LoginPage extends Component {
       e.preventDefault();
       let email = e.target.elements[1].value;
       let password = e.target.elements[2].value;
-
-      console.log("Submitted!");
       
       if (!email || !password) return alert("Please enter a username and password");
 

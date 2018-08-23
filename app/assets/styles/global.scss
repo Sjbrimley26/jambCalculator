@@ -179,6 +179,22 @@ body, html {
   display: inline-block;
 }
 
+.logoutButton {
+  position: absolute;
+  height: 3em;
+  width: 6em;
+  text-align: center;
+  top: calc(95% - 3em);
+  left: calc(95% - 6em);
+  border-radius: 10px;
+  background: rgb(182, 219, 245);
+  text-shadow: 0 0 5px white;
+  color: black;
+  border-color: black;
+  border-width: 1px;
+  font-weight: 800;
+}
+
 
 @media print {
   * {

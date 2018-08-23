@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Header } from "./";
+import Header from "./Header";
 
 import { titleCase } from "../../misc/utils";
 import { getPrice } from "../../calculator";
@@ -18,9 +18,13 @@ class ConfirmDoor extends Component {
     let doorPrice = getPrice(this.props.door);
     let goodPrice = typeof doorPrice === "number";
     let taxPrice;
-    if (goodPrice) taxPrice = (doorPrice * .0805).toFixed(2);
     let totalPrice;
-    if (goodPrice) totalPrice = ((parseFloat(doorPrice) * 100 + parseFloat(taxPrice) * 100)/ 100).toFixed(2);
+    
+    if (goodPrice) {
+      taxPrice = (doorPrice * .0805).toFixed(2);
+      totalPrice = ((parseFloat(doorPrice) * 100 + parseFloat(taxPrice) * 100)/ 100).toFixed(2);
+      doorPrice = doorPrice.toFixed(2);
+    }
 
     return (
       <div className="mainWindow">   

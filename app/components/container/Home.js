@@ -22,6 +22,9 @@ class Home extends Component {
         <Header title="Home" noButton={true} />
         <div className="mainContent">
           <Link to="/build" className="navLink" > Build Calculator </Link>
+          <br/>
+          <Link to="/profile" className="navLink" > Settings </Link>
+          <button className="logoutButton" onClick={userStore.logout}> Logout </button>
         </div>
       </div>
     );
