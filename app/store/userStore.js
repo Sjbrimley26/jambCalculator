@@ -8,7 +8,7 @@ const userStore = store({
 
   async getUser() {
     userStore.currentUser = await profileGET();
-    if (!user.email) return undefined;
+    if (!userStore.currentUser.email) return undefined;
     
     localStorage.setItem("user", JSON.stringify(userStore.currentUser));
     return userStore.currentUser;

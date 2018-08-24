@@ -41,7 +41,15 @@ class UserPage extends React.Component {
   }
 
   render(){
-    const { name, type } = this.state.user;
+    let { name, type } = this.state.user;
+    
+    if (name) {
+      let spaceIndex = name.indexOf(" ");
+
+      if ( spaceIndex >= 0 ) {
+        name = name.slice(0, spaceIndex);
+      }
+    }
 
 
     return (

@@ -18,33 +18,75 @@ class AddUser extends React.Component {
 
   submitForm = e => {
     e.preventDefault();
-    const values = Array.from(e.target.elements).map(el => [el.name, el.value]);
+    const values = Array.from(e.target.elements).map(el => {
+      if (el.type === "checkbox") {
+        return [el.name, el.checked];
+      }
+      return [el.name, el.value];
+    });
+
     const params = values.reduce((newObj, pair) => {
       let [ prop, val ] = pair;
-      if (prop === "sway") prop = "priceRange";
+      
       if (!prop) return newObj;
+
+      if (prop === "sway") {
+        prop = "priceRange";
+      }
+
+      if (prop === "admin") {
+        prop = "type";
+        val = val ? "admin" : "sales";
+      }
+
       return set(newObj, prop, val);
     }, {});
+
+    for ( let prop of Object.keys(params) ) {
+      if (params[prop] === "") {
+        return alert("Please fill in all fields!");
+      }
+    }
+
+    if ( params.password !== params.confirm ) {
+      return alert("Passwords do not match. Please re-enter passwords and try again.");
+    }
+
+    const { confirm, ...details } = params;
     
-    newAccountPOST({...params, type: "admin"})
+    
+    newAccountPOST(details)
       .then(data => {
-        if (data === "Email registered!") this.goBack();
-        else throw new Error("Error registering email!");
+        if (data === "Email registered!") {
+          this.goBack();
+        }
+        else {
+          throw new Error("Error registering email!");
+        }
       })
       .catch(err => console.log(err))
+    
   }
 
   render() {
 
-    const Input = ({field}) => {
+    const Input = ({ field }) => {
+      let type;
+
+      if (["confirm", "password"].includes(field)) {
+        type = "password";
+      } else {
+        type = "text";
+      }
+
       return (
         <div>
           <label htmlFor={field} className="label" >{titleCase(field)}: </label>
-          <input type="text" name={field} />
+          <input type={type} name={field} />
           <br/>
         </div>
       );
-    }
+    };
 
     return (
       <div className="mainWindow">
@@ -56,7 +98,10 @@ class AddUser extends React.Component {
                 <Input field="name" />
                 <Input field="email" />
                 <Input field="password" />
+                <Input field="confirm" />
                 <Input field="sway" />
+                <label htmlFor="admin" className="label" >Admin ?</label>
+                <input type="checkbox" name="admin" style={{ width: "auto" }}/>
                 <input type="submit" style={{display: "none"}}/>
               </fieldset>
             </form>
