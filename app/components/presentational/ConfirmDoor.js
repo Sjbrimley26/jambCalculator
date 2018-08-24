@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Header from "./Header";
 
-import { titleCase } from "../../misc/utils";
+import { titleCase } from "../../misc";
 import { getPrice } from "../../calculator";
 
 class ConfirmDoor extends Component {

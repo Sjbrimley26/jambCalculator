@@ -55,13 +55,13 @@ class LoginPage extends Component {
         { this.state.loggedIn ? <Redirect to="/" /> : null }
         <Header title="Login" noButton={true} /> 
         <div className="mainContent">
-          <div className="login">
+          <div className="form">
             <form onSubmit={submitForm.bind(this)}>
               <fieldset>
-                <label htmlFor="email" className="loginLabel" >Email: </label>
+                <label htmlFor="email" className="label" >Email: </label>
                 <input type="text" name="email" />
                 <br/>
-                <label htmlFor="password" className="loginLabel" >Password: </label>
+                <label htmlFor="password" className="label" >Password: </label>
                 <input type="password" name="password" />
                 <input type="submit" style={{display: "none"}}/>
               </fieldset>

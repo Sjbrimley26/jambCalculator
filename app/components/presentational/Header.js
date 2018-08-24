@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { view } from "react-easy-state";
 import BackButton from "./BackButton";
-import { titleCase } from "../../misc/utils";
+import { titleCase } from "../../misc";
 
 class Header extends Component {
   constructor(props){

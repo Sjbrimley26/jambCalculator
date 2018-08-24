@@ -5,18 +5,6 @@ import React from "react";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
-const verifyLogin = async () => {
-  const user = {...userStore.currentUser};
-
-  if (!user.email) {
-    await userStore.logout();
-    window.location.reload();
-    return undefined;
-  }
-
-  return user;
-};
-
 const AdminLinks = () => {
   return (
     <div>
@@ -32,7 +20,6 @@ class UserPage extends React.Component {
     super(props);
     this.state = {
       user: {
-        email: undefined,
         name: undefined,
         type: undefined
       }
@@ -41,7 +28,7 @@ class UserPage extends React.Component {
 
   initialize = async () => {
     this.setState({
-      user: await verifyLogin()
+      user: await userStore.verifyLogin()
     });
   }
 
@@ -54,7 +41,7 @@ class UserPage extends React.Component {
   }
 
   render(){
-    const { email, name, type } = this.state.user;
+    const { name, type } = this.state.user;
 
 
     return (

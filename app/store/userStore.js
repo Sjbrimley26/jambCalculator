@@ -1,5 +1,5 @@
 import { store } from "react-easy-state";
-import { profileGET } from "../router/axiosConfig";
+import { profileGET } from "../api";
 
 const userStore = store({
 
@@ -8,6 +8,8 @@ const userStore = store({
 
   async getUser() {
     userStore.currentUser = await profileGET();
+    if (!user.email) return undefined;
+    
     localStorage.setItem("user", JSON.stringify(userStore.currentUser));
     return userStore.currentUser;
   },
@@ -18,6 +20,18 @@ const userStore = store({
     localStorage.removeItem("token");
     window.location.reload();
     return userStore.currentUser;
+  },
+
+  async verifyLogin() {
+    const user = {...userStore.currentUser};
+
+    if (!user.email) {
+      await userStore.logout();
+      window.location.reload();
+      return undefined;
+    }
+
+    return user;
   }
 
 });
