@@ -8,7 +8,8 @@ import {
   Builder,
   LoginPage,
   UserPage,
-  AddUser
+  AddUser,
+  ChangePassword
 } from "../components/container";
 
 import { view } from "react-easy-state";
@@ -62,7 +63,8 @@ class AppRouter extends Component {
             <RouteCreate path="/confirmDoor" exact onEnter={verifyToken} render={ props => <ConfirmDoor {...props} door={doorStore.currentDoor} /> } />
             <RouteCreate path="/login" exact render={ props => <LoginPage {...props} /> } />
             <RouteCreate path="/profile" render={ props => <UserPage {...props}/> } />
-            <RouteCreate path="/addUser" component={ AddUser } />
+            <RouteCreate path="/addUser" onEnter={verifyToken} component={ AddUser } />
+            <RouteCreate path="/changePassword" onEnter={verifyToken} component={ ChangePassword } />
           </Switch>
           <div className="footer">
             <a href="https://icons8.com">Icon pack by Icons8</a>

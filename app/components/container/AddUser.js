@@ -70,19 +70,17 @@ class AddUser extends React.Component {
 
   render() {
 
-    const Input = ({ field }) => {
-      let type;
+    const Input = ({ field, type = "text" }) => {
+      let style = type === "checkbox" ? { width: "auto" } : null;
 
       if (["confirm", "password"].includes(field)) {
         type = "password";
-      } else {
-        type = "text";
       }
 
       return (
         <div>
           <label htmlFor={field} className="label" >{titleCase(field)}: </label>
-          <input type={type} name={field} />
+          <input type={type} name={field} style={style} />
           <br/>
         </div>
       );
@@ -100,8 +98,7 @@ class AddUser extends React.Component {
                 <Input field="password" />
                 <Input field="confirm" />
                 <Input field="sway" />
-                <label htmlFor="admin" className="label" >Admin ?</label>
-                <input type="checkbox" name="admin" style={{ width: "auto" }}/>
+                <Input field="admin" type="checkbox" />
                 <input type="submit" style={{display: "none"}}/>
               </fieldset>
             </form>

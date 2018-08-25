@@ -4,11 +4,13 @@ import {
 
 import {
   profileGET,
-  newAccountPOST
+  newAccountPOST,
+  changePasswordPOST
 } from "./requests";
 
 module.exports = {
   onAxiosError,
   profileGET,
-  newAccountPOST
+  newAccountPOST,
+  changePasswordPOST
 };

@@ -5,6 +5,7 @@ import RadioInputSelect from "./RadioInputSelect";
 import TextInputSelect from "./TextInputSelect";
 import UserPage from "./UserPage";
 import AddUser from "./AddUser";
+import ChangePassword from "./ChangePassword";
 
 module.exports = {
   Home,
@@ -13,5 +14,6 @@ module.exports = {
   RadioInputSelect,
   TextInputSelect,
   UserPage,
-  AddUser
+  AddUser,
+  ChangePassword
 };

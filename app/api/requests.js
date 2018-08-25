@@ -49,7 +49,39 @@ const newAccountPOST = async ({
   return response
 };
 
+const changePasswordPOST = async ({
+  email,
+  existingPassword,
+  newPassword
+}) => {
+  let response;
+
+  await axWithToken({
+      method: "POST",
+      url: "/changePassword",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      data: JSON.stringify({
+        email,
+        existingPassword,
+        newPassword
+      })
+    })
+    .then(res => {
+      if (res.data.message == "Password changed!") {
+        response = res.data.message;
+      } else {
+        alert("Invalid existing password!");
+      }
+    })
+    .catch(err => response = err)
+
+  return response
+}
+
 module.exports = {
   profileGET,
-  newAccountPOST
+  newAccountPOST,
+  changePasswordPOST
 };
