@@ -58,7 +58,9 @@ class UserPage extends React.Component {
         <div className="mainContent">
           <h3> Welcome { name }!</h3>
           <br/>
-          <Link to="/changePassword" className="navLink" >Change Password</Link>
+          {
+            name !== "Guest" ? <Link to="/changePassword" className="navLink" >Change Password</Link> : null
+          }
           {
             type === "admin" ?
               <AdminLinks />

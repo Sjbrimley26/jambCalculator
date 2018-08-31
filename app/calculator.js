@@ -15,7 +15,7 @@ const _ = require("lodash");
 
 */
 
-const createBuildSet = (location, build, height, material, priceArr) => {
+const createBuildSet = (location, build, heightOrHeights, material, priceArr) => {
 
   const createBuild = (location, build, height, material, jamb_width, price) => {
     return [{
@@ -41,14 +41,30 @@ const createBuildSet = (location, build, height, material, priceArr) => {
       "7-1/2\""
     ];
 
-  return sizes.map((size, i) => {
-    return createBuild(location, build, height, material, size, priceArr[i]);
-  });
+  if ( Array.isArray(heightOrHeights) ) {
+    const arr1 = sizes.map((size, i) => {
+      return createBuild(location, build, heightOrHeights[0], material, size, priceArr[i]);
+    });
+
+    const arr2 = sizes.map((size, i) => {
+      return createBuild(location, build, heightOrHeights[1], material, size, priceArr[i]);
+    });
+
+    return [ ...arr1, ...arr2 ];
+
+  } 
+  
+  else {
+    return sizes.map((size, i) => {
+      return createBuild(location, build, heightOrHeights, material, size, priceArr[i]);
+    });
+  }
 };
 
 // Currently only contains the FJ Pine prices
 const allBuildsAndOptions = new Map([
 
+    // FJ PINE
   ...createBuildSet(
     "Interior", // Details
     "Pre-Hung Single",
@@ -160,6 +176,134 @@ const allBuildsAndOptions = new Map([
     ]
   ),
 
+  // KNOTTY ALDER
+
+  ...createBuildSet(
+    "Interior",
+    "Pre-Hung Single",
+    ["6\'8\"", "8\'0\""],
+    "Knotty Alder",
+    [
+      81.53,
+      92.25,
+      130.48,
+      130.48
+    ]
+  ),
+
+  ...createBuildSet(
+    "Interior",
+    "Pre-Hung Double",
+    ["6\'8\"", "8\'0\""],
+    "Knotty Alder",
+    [
+      125.68,
+      138.55,
+      184.42,
+      184.42
+    ]
+  ),
+
+  ...createBuildSet(
+    "Exterior",
+    "Pre-Hung Single",
+    ["6\'8\"", "8\'0\""],
+    "Knotty Alder",
+    [
+      162.75,
+      236.40
+    ]
+  ),
+
+  ...createBuildSet(
+    "Exterior",
+    "Pre-Hung Double",
+    ["6\'8\"", "8\'0\""],
+    "Knotty Alder",
+    [
+      308.65,
+      392.26
+    ]
+  ),
+
+  // SOLID PINE
+
+  ...createBuildSet(
+    "Interior",
+    "Pre-Hung Single",
+    "6\'8\"",
+    "Solid Pine",
+    [
+      51.33,
+      60.67,
+      63.18,
+      83.47
+    ]
+  ),
+
+  ...createBuildSet(
+    "Interior",
+    "Pre-Hung Double",
+    "6\'8\"",
+    "Solid Pine",
+    [
+      89.44,
+      100.64,
+      103.66,
+      128.33
+    ]
+  ),
+
+  ...createBuildSet(
+    "Interior",
+    "Pre-Hung Single",
+    "8\'0\"",
+    "Solid Pine",
+    [
+      61.67,
+      99.55,
+      99.55,
+      99.55
+    ]
+  ),
+
+  ...createBuildSet(
+    "Interior",
+    "Pre-Hung Double",
+    "8\'0\"",
+    "Solid Pine",
+    [
+      104.95,
+      150.42,
+      150.42,
+      150.42
+    ]
+  ),
+
+  ...createBuildSet(
+    "Exterior",
+    "Pre-Hung Single",
+    ["6\'8\"", "8\'0\""],
+    "Solid Pine",
+    [
+      150.23,
+      192.01
+    ]
+  ),
+
+  ...createBuildSet(
+    "Exterior",
+    "Pre-Hung Double",
+    ["6\'8\"", "8\'0\""],
+    "Solid Pine",
+    [
+      292.43,
+      342.56
+    ]
+  ),
+
+  // SOLID ALDER
+
 ]);
 
 const getPricingDetails = doorOptions => {
@@ -235,8 +379,6 @@ const getPrice = doorOptions => {
         tempDoor.jamb_width = "7-1/2\"";
       }
     }
-
-    // console.log("Pre-Price Search", doorOptions);
 
     let price = [...allBuildsAndOptions].filter(build => {
       let [ details, price ] = build;

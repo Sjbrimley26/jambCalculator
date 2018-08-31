@@ -4,8 +4,8 @@ const ax = ( options ) => {
   const { url, ...details } = options;
   
   return axios({
-    // "url": "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest" + url,
-    baseURL : "http://localhost:3000" + url,
+    "url": "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest" + url,
+    // baseURL : "http://localhost:3000" + url,
     ...details
   });
 }; // Returns a promise that should contain the response
@@ -17,8 +17,8 @@ const axWithToken = ( options ) => {
   const { headers, url, ...details } = options;
 
   return axios({
-    // baseURL: "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest" + url,
-    baseURL : "http://localhost:3000" + url,
+    baseURL: "https://ljzr3vjgff.execute-api.us-west-2.amazonaws.com/latest" + url,
+    // baseURL : "http://localhost:3000" + url,
     "headers": {
       Authorization: `Bearer ${token}`,
       ...headers
